@@ -6,66 +6,35 @@
 #include <gl\glu.h>
 #include <gl\glaux.h>
 
+/* Les constantes */
+#define WIDTH 800
+#define HEIGHT 600
 
-/* -----   Les types ----- */
-
-typedef struct Fenetre Fenetre;
-struct Fenetre
+/* Les types */
+typedef struct Rect Rect;
+struct Rect
 {
-    HDC hDC;   // Contexte GDI
-    HGLRC hRC; // Conexte de rendu permanent
-    HWND hWnd; // Handle de la fenetre
-    HINSTANCE hInstance;  // Instance de l'application
+    int x;
+    int y;
+    int w;
+    int h;
 };
 
-typedef struct Message Message;
-struct Message
+
+typedef struct Contexte_GL Contexte_GL;
+struct Contexte_GL
 {
-    MSG message; // Reserve a windows
-
-    char	keys[256];			// Touches du clavier
-    char	active;		        // Fenetre active ou non
-    char	fullscreen;	        // Fenetre en mode plein ecran ou non
-    char	screensaver;	    // Ecran de veille declanche
-    char	monitorpower;	    // Ecran en mode sauvegarde d'energie
-    char    resize;             // Indique si un resize de la fenetre a eu lieu
-        GLsizei new_largeur;    // Donne la nouvelle largeur apres resize
-        GLsizei new_hauteur;    // Donne la nouvelle largeur apres resize
-    char    fermeture;          // Fermeture demandee ou non
+    HWND hWnd;
+    HDC dc;
+    HGLRC rc;
 };
-/*
-    char est un booleen, c est-a-dire variable qui prend les valeurs 0 ou 1, soit faux ou vrai.
-    ici, un 1 signifie un appui et un 0 signifie un non-appui
-*/
+
+LRESULT CALLBACK procedureFenetrePrincipale(HWND, UINT, WPARAM, LPARAM);
 
 
-/* -----   Les variables globales ----- */
-Message* messages;
-/*
-    Cette variable se doit d'etre en globale car elle est utilisee par la fonction CallBack
-*/
-
-
-/* -----   Les fonctions ----- */
-
-LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-/*
-    Fonction un peu speciale. Cette fonction est la fonction CallBack. On ne l'appelera pas directement,
-    elle est appelee par la fenetre elle-meme automatiquement. Elle recoit les messages (messages ~ evenements)
-    Son implementation permet de gerer la structure message
-*/
-
-void ouvrir_fenetre(Fenetre* fenetre);  // A FAIRE
-void creer_contexte_opengl(Fenetre* fenetre); // A FINIR
-void eteindre_fenetre();
-
-void init_messages(Message* message);
-void dlt_messages(Message* message);
-
-/*
-    Fonction qui initialise les parametres de message par defaut
-    Ne realise aucune allocation dynamique
-*/
+int  init_gl(HWND parent, HINSTANCE _instance, Contexte_GL* contexte, Rect position);
+int  delete_gl(Contexte_GL* contexte);
+void update_gl(Contexte_GL* contexte);
 
 
 #endif // FENETRE_H_INCLUDED
