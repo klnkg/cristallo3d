@@ -16,6 +16,12 @@ LRESULT CALLBACK procedureFenetrePrincipale(HWND fenetrePrincipale, UINT message
     }
 }
 
+int ouvrir_fenetre(Fenetre* fenetre)
+{
+
+    return 0;
+}
+
 int  init_gl(HWND parent, HINSTANCE _instance, Contexte_GL* contexte, Rect position)
 {
     contexte->hWnd = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE, position.x, position.y, position.w, position.h, parent, NULL, _instance, NULL);
@@ -59,4 +65,18 @@ int  delete_gl(Contexte_GL* contexte)
     DestroyWindow(contexte->hWnd);
 
     return 0;
+}
+
+
+void sample_dessin()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glBegin(GL_TRIANGLES);
+        glColor3ub(255,0,0);    glVertex2d(-0.75,-0.75);
+        glColor3ub(0,255,0);    glVertex2d(0,0.75);
+        glColor3ub(0,0,255);    glVertex2d(0.75,-0.75);
+    glEnd();
+
+    glFlush();
 }
