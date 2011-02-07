@@ -20,7 +20,6 @@ struct Rect
     int h;
 };
 
-
 typedef struct Contexte_GL Contexte_GL;
 struct Contexte_GL
 {
@@ -29,12 +28,26 @@ struct Contexte_GL
     HGLRC rc;
 };
 
+typedef struct Fenetre Fenetre;
+struct Fenetre
+{
+    HWND handle;
+    MSG message;
+    WNDCLASS classe;
+    HINSTANCE instance;
+};
+
 LRESULT CALLBACK procedureFenetrePrincipale(HWND, UINT, WPARAM, LPARAM);
 
+// Fonctions Windows
+int ouvrir_fenetre(Fenetre* fenetre);
 
+// Fonctions OpenGL
 int  init_gl(HWND parent, HINSTANCE _instance, Contexte_GL* contexte, Rect position);
 int  delete_gl(Contexte_GL* contexte);
 void update_gl(Contexte_GL* contexte);
+
+void sample_dessin();
 
 
 #endif // FENETRE_H_INCLUDED
